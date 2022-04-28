@@ -1,6 +1,7 @@
 package toyproject.annonymouschat.chat.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.config.DBConnectionUtil;
 
@@ -10,7 +11,7 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class ChatRepository {
     // 게시글 저장
-    public Chat save(String content) {
+    public Chat save(ChatSaveDto chatSaveDto) {
 
         String sql = "insert into chat(content) values(?)";
         Connection conn = null;
@@ -21,7 +22,7 @@ public class ChatRepository {
             conn = DBConnectionUtil.getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             // Statement.RETURN_GENERATED_KEYS -> 생성된 컬럼의 아이디를 반환하는 파라미터
-            pstmt.setString(1, content);
+            pstmt.setString(1, chatSaveDto.getContent());
             pstmt.executeUpdate();
 
             rs = pstmt.getGeneratedKeys();
@@ -83,6 +84,7 @@ public class ChatRepository {
             pstmt.setLong(1, id);
 
             pstmt.executeUpdate();
+            log.info("정상적으로 삭제되었습니다.");
 
         } catch (SQLException e) {
             log.error("쿼리 실행 중 오류", e);
