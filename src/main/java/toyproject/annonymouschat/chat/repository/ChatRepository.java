@@ -6,6 +6,8 @@ import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.config.DBConnectionUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -36,6 +38,34 @@ public class ChatRepository {
 
         } catch (SQLException e) {
             log.error("쿼리 실행 중 오류", e);
+            throw new RuntimeException(e);
+        } finally {
+            closeConnection(rs, conn, pstmt);
+        }
+    }
+
+    public List<Chat> findAll() {
+        String sql = "select * from chat";
+
+        List<Chat> chats = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBConnectionUtil.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                long id = rs.getLong("id");
+                String content = rs.getString("content");
+                Timestamp createdate = rs.getTimestamp("createdate");
+
+                Chat chat = new Chat(id, content, createdate);
+                chats.add(chat);
+            }
+            return chats;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             closeConnection(rs, conn, pstmt);

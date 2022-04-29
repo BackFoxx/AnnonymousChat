@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(name = "chat/post", urlPatterns = "/chat/post")
-public class ChatPostServlet extends HttpServlet {
+@WebServlet(name = "chat/postbox", urlPatterns = "/chat/postbox")
+public class ChatPostBoxServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("jsp 호출");
-        String viewPath = "/chat/post.jsp";
+        String viewPath = "/chat/postbox.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
         dispatcher.forward(request, response);
     }

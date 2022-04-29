@@ -1,13 +1,14 @@
 package toyproject.annonymouschat.chat.model;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 @Getter
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public class Chat {

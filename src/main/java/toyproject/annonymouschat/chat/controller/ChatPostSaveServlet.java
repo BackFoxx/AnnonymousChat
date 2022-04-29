@@ -29,7 +29,12 @@ public class ChatPostSaveServlet extends HttpServlet {
         ChatSaveDto chat = objectMapper.readValue(messageBody, ChatSaveDto.class);
 
         chatService.save(chat);
-        log.info("content = {}", chat);
 
+        ChatPostSaveResponseDto responseDto = new ChatPostSaveResponseDto(true, "okok", "/");
+        String result = objectMapper.writeValueAsString(responseDto);
+        response.getWriter().write(result);
+
+        log.info("saved content = {}", chat);
+        log.info("result = {}", result);
     }
 }
