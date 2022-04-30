@@ -7,7 +7,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ChatPostSaveResponseDto {
+public class ChatPostSaveDeleteResponseDto {
     private boolean ok;
     private String message;
     private String redirect;

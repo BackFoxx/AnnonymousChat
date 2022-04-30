@@ -30,7 +30,7 @@ public class ChatPostSaveServlet extends HttpServlet {
 
         chatService.save(chat);
 
-        ChatPostSaveResponseDto responseDto = new ChatPostSaveResponseDto(true, "okok", "/");
+        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/");
         String result = objectMapper.writeValueAsString(responseDto);
         response.getWriter().write(result);
 
