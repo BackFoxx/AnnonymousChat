@@ -3,6 +3,7 @@ package toyproject.annonymouschat.chat.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StreamUtils;
+import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.service.ChatService;
 

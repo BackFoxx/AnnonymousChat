@@ -42,4 +42,11 @@ class ChatRepositoryTest {
             assertThat(findChat).isEqualTo(assertChat);
         }
     }
+
+    @Test
+    void chatRandom() {
+        Chat random = repository.getRandom();
+        Chat random2 = repository.getRandom();
+        assertThat(random.getId()).isNotEqualTo(random2.getId());
+    }
 }

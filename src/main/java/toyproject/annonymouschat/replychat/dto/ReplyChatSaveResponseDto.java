@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.chat.controller;
+package toyproject.annonymouschat.replychat.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,8 +6,7 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @Getter
-@Setter
-public class ChatPostSaveDeleteResponseDto {
+public class ReplyChatSaveResponseDto {
     private boolean ok;
     private String message;
     private String redirect;

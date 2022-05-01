@@ -22,10 +22,10 @@
         <p class="lead"><%=request.getRequestURI()%></p>
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">새로운 익명의 편지</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <h5 id="chat-title" class="card-title"></h5>
+                <p id="chat-content" class="card-text"></p>
+                <a onclick="ReplyChatForm()" type="button" class="d-block">답장하기</a>
+                <a onclick="getRandomChat()" type="button" class="d-block">다른 편지 보기</a>
             </div>
         </div>
     </div>
@@ -43,4 +43,30 @@
 </body>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        getRandomChat();
+    });
+
+    let chat = {
+        'id' : null
+    }
+
+    function getRandomChat() {
+        $.ajax({
+            type: 'get',
+            url: '/chat/postbox/random',
+            success: function (result) {
+                const parsed = JSON.parse(result);
+                document.getElementById('chat-title').innerText = parsed.createDate;
+                document.getElementById('chat-content').innerText = parsed.content;
+                chat.id = parsed.id;
+            }
+        })
+    }
+
+    function ReplyChatForm() {
+        window.location.href = '/replyForm?id=' + chat.id;
+    }
+</script>
 </html>

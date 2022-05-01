@@ -19,4 +19,11 @@ public class ChatService {
     public List<Chat> findAll() {
         return repository.findAll();
     }
+    public Chat getRandom() {
+        return repository.getRandom();
+    }
+
+    public Chat findbyId(Long id) {
+        return repository.findById(id);
+    }
 }

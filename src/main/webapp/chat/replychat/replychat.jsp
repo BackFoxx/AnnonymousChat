@@ -1,9 +1,10 @@
+<%@ page import="toyproject.annonymouschat.chat.model.Chat" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>편지 보내기</title>
+    <title>답장 보내기</title>
 
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/jumbotron-narrow.css">
@@ -18,8 +19,12 @@
     </div>
     <div class="jumbotron">
         <h1>RandomChat</h1>
-        <p class="lead">편지 보내기</p>
-        <p class="lead"><%=request.getRequestURI()%></p>
+        <p class="lead">답장 보내기</p>
+        <p class="lead">To.</p>
+        <div class="input-group mb-3">
+            <textarea type="text" class="form-control" rows="5" aria-label="Large" aria-describedby="inputGroup-sizing-sm" disabled><%=((Chat)request.getAttribute("chat")).getContent()%></textarea>
+        </div>
+        <p class="lead">답장</p>
         <div class="input-group mb-3">
             <textarea name="content" type="text" class="form-control" rows="5" aria-label="Large" aria-describedby="inputGroup-sizing-sm"></textarea>
         </div>
@@ -39,15 +44,16 @@
 <script>
     $('#submitButton').click(function () {
 
-        let chat = {
-            'content': $('textarea[name="content"]').val()
+        let replyChat = {
+            'content': $('textarea[name="content"]').val(),
+            'chatId' : <%=((Chat)request.getAttribute("chat")).getId()%>
         };
 
         $.ajax({
             type: 'post',
-            url: '/chat/post/save',
+            url: '/reply',
             headers: {'Content-Type': 'application/json'},
-            data: JSON.stringify(chat),
+            data: JSON.stringify(replyChat),
             success: function (result) {
                 const parsed = JSON.parse(result);
                 if (parsed.ok) {

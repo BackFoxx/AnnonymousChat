@@ -102,6 +102,34 @@ public class ChatRepository {
         }
     }
 
+    public Chat getRandom() {
+        String sql = "select * from chat order by rand() limit 1";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBConnectionUtil.getConnection();
+            pstmt = conn.prepareStatement(sql);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                Chat chat = new Chat(rs.getLong("id"),
+                        rs.getString("content"),
+                        rs.getTimestamp("createdate"));
+
+                return chat;
+            } else {
+                throw new NoSuchElementException("해당 아이디로 게시글을 찾을 수 없음");
+            }
+        } catch (SQLException e) {
+            log.error("쿼리 실행 중 오류", e);
+            throw new RuntimeException(e);
+        } finally {
+            closeConnection(rs, conn, pstmt);
+        }
+    }
+
     // 아이디를 이용한 삭제
     public void delete(Long id) {
         String sql = "delete from chat where id=?";

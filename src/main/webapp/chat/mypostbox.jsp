@@ -1,3 +1,6 @@
+<%@ page import="java.util.List" %>
+<%@ page import="toyproject.annonymouschat.chat.model.Chat" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -22,9 +25,9 @@
         <h1>RandomChat</h1>
         <p class="lead">편지함</p>
         <p class="lead"><%=request.getRequestURI()%></p>
-        <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div id="carouselExampleControls" class="carousel carousel-dark slide carousel-fade">
             <div class="carousel-inner">
-                <c:forEach var="chat" items='<%=request.getAttribute("findChats")%>' varStatus="status">
+                <c:forEach var="chat" items='<%=request.getAttribute("findChats")%>' varStatus="status" end='<%=((ArrayList<Chat>)request.getAttribute("findChats")).size()%>'>
                     <div class="carousel-item">
                         <div class="card">
                             <div class="card-body">
@@ -42,6 +45,10 @@
                         </div>
                         <div class="row">
                             <div class="col mt-3 text-end">
+                                <ol class="breadcrumb float-start">
+                                    <li class="breadcrumb-item"><a href="#">${status.count}</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">${status.end}</li>
+                                </ol>
                                 <button onclick="deleteChat(this.id)" id="deleteButton_${chat.id}" type="button" class="w-25 btn btn-outline-warning btn-lg">삭제</button>
                             </div>
                         </div>
@@ -61,7 +68,7 @@
 <script type="text/javascript">
     function deleteChat(btnId) {
         const deleteDto = {
-            'id' : id.split('_')[1]
+            'id' : btnId.split('_')[1]
         }
 
         $.ajax({
@@ -72,6 +79,7 @@
             success: function (result) {
                 const parsed = JSON.parse(result);
                 if (parsed.ok) {
+                    alert(parsed.message);
                     window.location.href = parsed.redirect;
                 }
             }
