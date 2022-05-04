@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(name = "registration", urlPatterns = "/registration")
+@WebServlet(name = "registration", urlPatterns = "/login/registration")
 public class UserRegistrationServlet extends HttpServlet {
     private UserService userService = new UserService();
 
@@ -26,7 +26,7 @@ public class UserRegistrationServlet extends HttpServlet {
         String savedEmail = userService.registration(registrationDto);
 
         request.setAttribute("savedEmail", savedEmail);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login-form");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login/login-form");
         requestDispatcher.forward(request, response);
     }
 }

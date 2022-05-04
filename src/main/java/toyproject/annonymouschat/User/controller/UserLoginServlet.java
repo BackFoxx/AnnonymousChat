@@ -31,7 +31,7 @@ public class UserLoginServlet extends HttpServlet {
             response.sendRedirect("/");
         } else {
             log.info("로그인 실패");
-            response.sendRedirect("/login-form");
+            response.sendRedirect("/login/login-form");
         }
     }
 }

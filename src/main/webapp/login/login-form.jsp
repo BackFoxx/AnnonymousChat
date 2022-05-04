@@ -17,7 +17,7 @@
         </ul>
         <a href="/"><h3 class="text-muted">RandomChat</h3></a>
     </div>
-    <form method="post" action="/registration" class="jumbotron">
+    <form method="post" action="/login" class="jumbotron">
         <h1>RandomChat</h1>
         <p class="lead">로그인</p>
         <div class="mb-3 row">
@@ -28,13 +28,13 @@
         </div>
         <div class="mb-3 row">
             <label for="password" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">`
+            <div class="col-sm-10">
                 <input name="password" type="password" class="form-control" id="password">
             </div>
         </div>
         <div class="col mt-3 text-end">
             <button type="submit" class="w-25 btn btn-primary btn-sm">로그인</button>
-            <a href="/registration-form"><button type="button" class="w-25 btn btn-outline-success btn-sm">회원가입</button></a>
+            <a href="/login/registration-form"><button type="button" class="w-25 btn btn-outline-success btn-sm">회원가입</button></a>
         </div>
     </form>
 </div>

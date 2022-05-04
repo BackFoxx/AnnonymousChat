@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(name = "registration-form", urlPatterns = "/registration-form")
+@WebServlet(name = "registration-form", urlPatterns = "/login/registration-form")
 public class RegistrationFormServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -45,13 +45,13 @@ public class UserSession {
         return (User)sessionStore.get(sessionCookie.getValue());
     }
 
-    public void expire(HttpServletRequest request) {
+    public void expire(HttpServletRequest request, HttpServletResponse response) {
         //찾아낸 쿠키에 해당하는 세션 값을 삭제
         Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
         if (sessionCookie != null) {
             sessionStore.remove(sessionCookie.getValue());
+            sessionCookie.setMaxAge(0);
+            response.addCookie(sessionCookie);
         }
     }
-
-    HttpSession
 }
