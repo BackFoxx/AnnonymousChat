@@ -10,4 +10,5 @@ public class ReplyChat {
     @JsonFormat(pattern = "yyyy/MM/dd hh:mm")
     private Timestamp createDate;
     private Long ChatId;
+    private Long UserId;
 }

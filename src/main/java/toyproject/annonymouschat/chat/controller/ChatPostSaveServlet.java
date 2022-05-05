@@ -3,6 +3,7 @@ package toyproject.annonymouschat.chat.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StreamUtils;
+import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.service.ChatService;
@@ -28,11 +29,14 @@ public class ChatPostSaveServlet extends HttpServlet {
         ServletInputStream inputStream = request.getInputStream();
         String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         ChatSaveDto chat = objectMapper.readValue(messageBody, ChatSaveDto.class);
+        chat.setUserId(((User) request.getAttribute("user")).getId());
 
         chatService.save(chat);
 
-        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/");
+        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "저장 완료되었습니다.", "/chat/mypostbox");
         String result = objectMapper.writeValueAsString(responseDto);
+
+        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(result);
 
         log.info("saved content = {}", chat);

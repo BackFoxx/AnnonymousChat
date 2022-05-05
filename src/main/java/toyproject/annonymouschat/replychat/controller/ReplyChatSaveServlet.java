@@ -2,6 +2,7 @@ package toyproject.annonymouschat.replychat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDto;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveResponseDto;
 import toyproject.annonymouschat.replychat.service.ReplyChatService;
@@ -24,6 +25,8 @@ public class ReplyChatSaveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletInputStream inputStream = request.getInputStream();
         ReplyChatSaveDto dto = objectMapper.readValue(inputStream, ReplyChatSaveDto.class);
+        dto.setUserId(((User) request.getAttribute("user")).getId());
+
         replyChatService.saveReply(dto);
 
         log.info("reply 저장 완료");

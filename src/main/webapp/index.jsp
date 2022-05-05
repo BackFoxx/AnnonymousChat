@@ -32,7 +32,7 @@
             <p>
                 <a class="btn btn-lg btn-outline-success" href="/chat/postbox">편지함 보기</a>
                 <a class="btn btn-lg btn-success" href="/chat/post">편지 보내기</a>
-                <a class="btn btn-lg btn-outline-dark" href="/chat/post">로그 아웃</a>
+                <a class="btn btn-lg btn-outline-dark" href="/logout">로그 아웃</a>
             </p>
         </c:if>
     </div>

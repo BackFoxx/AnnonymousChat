@@ -2,6 +2,7 @@ package toyproject.annonymouschat.chat.service;
 
 import toyproject.annonymouschat.chat.dto.ChatDeleteDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
+import toyproject.annonymouschat.chat.dto.MyChatPostBoxResponseDto;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.repository.ChatRepository;
 
@@ -16,14 +17,14 @@ public class ChatService {
     public void delete(ChatDeleteDto chatDeleteDto) {
         repository.delete(chatDeleteDto.getId());
     }
-    public List<Chat> findAll() {
-        return repository.findAll();
+    public List<MyChatPostBoxResponseDto> findAllByUserId(Long userId) {
+        return repository.findAllByUserId(userId);
     }
-    public Chat getRandom() {
-        return repository.getRandom();
+    public Chat getRandom(Long userId) {
+        return repository.getRandom(userId);
     }
 
-    public Chat findbyId(Long id) {
-        return repository.findById(id);
+    public Chat findbyChatId(Long id) {
+        return repository.findByChatId(id);
     }
 }

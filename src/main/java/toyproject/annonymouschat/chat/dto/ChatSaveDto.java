@@ -8,5 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatSaveDto {
+    private Long UserId;
     private String content;
 }

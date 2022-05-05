@@ -12,7 +12,7 @@ import java.sql.SQLException;
 @Slf4j
 public class ReplyChatRepository {
     public void saveReply(ReplyChatSaveDto dto) {
-        String sql = "insert into replychat (content, chatId) values (?, ?)";
+        String sql = "insert into replychat (content, chatId, user_id) values (?, ?, ?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
 
@@ -21,6 +21,7 @@ public class ReplyChatRepository {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getContent());
             pstmt.setLong(2, dto.getChatId());
+            pstmt.setLong(3, dto.getUserId());
 
             pstmt.executeUpdate();
         } catch (SQLException e) {

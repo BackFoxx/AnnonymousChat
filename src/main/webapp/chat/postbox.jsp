@@ -20,8 +20,8 @@
         <h1>RandomChat</h1>
         <p class="lead">편지함</p>
         <p class="lead"><%=request.getRequestURI()%></p>
-        <div class="card">
-            <div class="card-body">
+        <div id="chat_card" class="card">
+            <div id="chat_card_body" class="card-body">
                 <h5 id="chat-title" class="card-title"></h5>
                 <p id="chat-content" class="card-text"></p>
                 <a onclick="ReplyChatForm()" type="button" class="d-block">답장하기</a>
@@ -58,9 +58,15 @@
             url: '/chat/postbox/random',
             success: function (result) {
                 const parsed = JSON.parse(result);
-                document.getElementById('chat-title').innerText = parsed.createDate;
-                document.getElementById('chat-content').innerText = parsed.content;
-                chat.id = parsed.id;
+
+                if (parsed !== null) {
+                    document.getElementById('chat-title').innerText = parsed.createDate;
+                    document.getElementById('chat-content').innerText = parsed.content;
+                    chat.id = parsed.id;
+                } else {
+                    document.getElementById('chat_card_body').className += 'visually-hidden';
+                    document.getElementById('chat_card').innerHTML = '<p class="lead mt-3">게시글이 없습니다.</p>'
+                }
             }
         })
     }

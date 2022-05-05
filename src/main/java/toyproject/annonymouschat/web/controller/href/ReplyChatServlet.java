@@ -18,7 +18,7 @@ public class ReplyChatServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.valueOf(request.getParameter("id"));
-        Chat chat = chatService.findbyId(id);
+        Chat chat = chatService.findbyChatId(id);
         request.setAttribute("chat", chat);
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/chat/replychat/replychat.jsp");

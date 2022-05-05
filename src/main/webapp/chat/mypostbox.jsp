@@ -1,4 +1,3 @@
-<%@ page import="java.util.List" %>
 <%@ page import="toyproject.annonymouschat.chat.model.Chat" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -27,7 +26,14 @@
         <p class="lead"><%=request.getRequestURI()%></p>
         <div id="carouselExampleControls" class="carousel carousel-dark slide carousel-fade">
             <div class="carousel-inner">
-                <c:forEach var="chat" items='<%=request.getAttribute("findChats")%>' varStatus="status" end='<%=((ArrayList<Chat>)request.getAttribute("findChats")).size()%>'>
+                <c:if test='${empty findChats}'>
+                    <div id="chat_card" class="card">
+                        <div id="chat_card_body" class="card-body">
+                            <p class="lead mt-3">게시글이 없습니다.</p>
+                        </div>
+                    </div>
+                </c:if>
+                <c:forEach var="chat" items='${findChats}' varStatus="status" end='<%=((ArrayList<Chat>)request.getAttribute("findChats")).size()%>'>
                     <div class="carousel-item">
                         <div class="card">
                             <div class="card-body">

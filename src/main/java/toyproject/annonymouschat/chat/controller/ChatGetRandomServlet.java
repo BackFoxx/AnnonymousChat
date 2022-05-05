@@ -2,6 +2,7 @@ package toyproject.annonymouschat.chat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.service.ChatService;
 
@@ -20,7 +21,8 @@ public class ChatGetRandomServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Chat randomChat = chatService.getRandom();
+        Long userId = ((User) request.getAttribute("user")).getId();
+        Chat randomChat = chatService.getRandom(userId);
         String json = objectMapper.writeValueAsString(randomChat);
 
         response.setCharacterEncoding("UTF-8");

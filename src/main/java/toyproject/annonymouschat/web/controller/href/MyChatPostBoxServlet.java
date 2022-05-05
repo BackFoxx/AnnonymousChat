@@ -1,7 +1,8 @@
 package toyproject.annonymouschat.web.controller.href;
 
 import lombok.extern.slf4j.Slf4j;
-import toyproject.annonymouschat.chat.model.Chat;
+import toyproject.annonymouschat.User.model.User;
+import toyproject.annonymouschat.chat.dto.MyChatPostBoxResponseDto;
 import toyproject.annonymouschat.chat.service.ChatService;
 
 import javax.servlet.RequestDispatcher;
@@ -22,8 +23,8 @@ public class MyChatPostBoxServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.info("jsp 호출");
-
-        List<Chat> findChats = chatService.findAll();
+        Long userId = ((User) request.getAttribute("user")).getId();
+        List<MyChatPostBoxResponseDto> findChats = chatService.findAllByUserId(userId);
         request.setAttribute("findChats", findChats);
 
         String viewPath = "/chat/mypostbox.jsp";
