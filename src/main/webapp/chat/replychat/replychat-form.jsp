@@ -51,7 +51,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/reply',
+            url: '/reply/save',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(replyChat),
             success: function (result) {

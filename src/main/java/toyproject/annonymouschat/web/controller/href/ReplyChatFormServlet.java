@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "replyForm", urlPatterns = "/replyForm")
-public class ReplyChatServlet extends HttpServlet {
+public class ReplyChatFormServlet extends HttpServlet {
     ChatService chatService = new ChatService();
 
     @Override
@@ -21,7 +21,7 @@ public class ReplyChatServlet extends HttpServlet {
         Chat chat = chatService.findbyChatId(id);
         request.setAttribute("chat", chat);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/chat/replychat/replychat.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/chat/replychat/replychat-form.jsp");
         requestDispatcher.forward(request, response);
     }
 }

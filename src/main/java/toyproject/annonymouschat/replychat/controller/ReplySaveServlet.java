@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDto;
-import toyproject.annonymouschat.replychat.dto.ReplyChatSaveResponseDto;
+import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDeleteResponseDto;
 import toyproject.annonymouschat.replychat.service.ReplyChatService;
 
 import javax.servlet.ServletException;
@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(name = "reply", urlPatterns = "/reply")
-public class ReplyChatSaveServlet extends HttpServlet {
+@WebServlet(name = "reply", urlPatterns = "/reply/save")
+public class ReplySaveServlet extends HttpServlet {
     private ReplyChatService replyChatService = new ReplyChatService();
     private ObjectMapper objectMapper = new ObjectMapper();
 
@@ -30,7 +30,7 @@ public class ReplyChatSaveServlet extends HttpServlet {
         replyChatService.saveReply(dto);
 
         log.info("reply 저장 완료");
-        ReplyChatSaveResponseDto responseDto = new ReplyChatSaveResponseDto(true, "저장 완료되었습니다", "/chat/postbox");
+        ReplyChatSaveDeleteResponseDto responseDto = new ReplyChatSaveDeleteResponseDto(true, "저장 완료되었습니다", "/chat/postbox");
         String result = objectMapper.writeValueAsString(responseDto);
 
         response.setCharacterEncoding("UTF-8");

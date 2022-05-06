@@ -32,7 +32,10 @@
     <div class="row">
         <div class="col mt-3 text-end">
             <a href="/chat/mypostbox">
-                <button id="submitButton" type="button" class="w-25 btn btn-primary btn-lg">내가 보낸 편지</button>
+                <button type="button" class="w-auto btn btn-primary btn-lg">내가 보낸 편지</button>
+            </a>
+            <a href="/chat/myreply">
+                <button type="button" class="w-auto btn btn-primary btn-lg">내가 쓴 답장</button>
             </a>
             <a href="/">
                 <button class="w-25 btn btn-outline-primary btn-lg">홈</button>
