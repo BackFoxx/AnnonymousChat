@@ -73,7 +73,7 @@
 
         $.ajax({
             type: 'get',
-            url: '/reply/find?chatId=' + chatId,
+            url: '/v/reply/find?chatId=' + chatId,
             success: function (result) {
                 placeReplies(result);
             }
@@ -87,7 +87,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/reply/delete',
+            url: '/v/reply/delete',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(deleteDto),
             success: function (result) {

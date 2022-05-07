@@ -23,16 +23,16 @@
         <c:if test='${empty user}'>
             <p class="lead">회원 기능</p>
             <p>
-                <a class="btn btn-lg btn-outline-primary" href="/login/registration-form">회원 가입</a>
-                <a class="btn btn-lg btn-primary" href="/login/login-form">로그인</a>
+                <a class="btn btn-lg btn-outline-primary" href="/v/login/registration-form">회원 가입</a>
+                <a class="btn btn-lg btn-primary" href="/v/login/login-form">로그인</a>
             </p>
         </c:if>
         <c:if test='${not empty user}'>
             <p class="lead">${user.userEmail}님 반갑습니다!</p>
             <p>
-                <a class="btn btn-lg btn-outline-success" href="/chat/postbox">편지함 보기</a>
-                <a class="btn btn-lg btn-success" href="/chat/post">편지 보내기</a>
-                <a class="btn btn-lg btn-outline-dark" href="/logout">로그 아웃</a>
+                <a class="btn btn-lg btn-outline-success" href="/v/chat/postbox">편지함 보기</a>
+                <a class="btn btn-lg btn-success" href="/v/chat/post">편지 보내기</a>
+                <a class="btn btn-lg btn-outline-dark" href="/v/logout">로그 아웃</a>
             </p>
         </c:if>
     </div>

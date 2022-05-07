@@ -31,10 +31,10 @@
     </div>
     <div class="row">
         <div class="col mt-3 text-end">
-            <a href="/chat/mypostbox">
+            <a href="/v/chat/mypostbox">
                 <button type="button" class="w-auto btn btn-primary btn-lg">내가 보낸 편지</button>
             </a>
-            <a href="/chat/myreply">
+            <a href="/v/chat/myreply">
                 <button type="button" class="w-auto btn btn-primary btn-lg">내가 쓴 답장</button>
             </a>
             <a href="/">
@@ -58,7 +58,7 @@
     function getRandomChat() {
         $.ajax({
             type: 'get',
-            url: '/chat/postbox/random',
+            url: '/v/chat/postbox/random',
             success: function (result) {
                 const parsed = JSON.parse(result);
 
@@ -75,7 +75,7 @@
     }
 
     function ReplyChatForm() {
-        window.location.href = '/replyForm?id=' + chat.id;
+        window.location.href = '/v/replyForm?id=' + chat.id;
     }
 </script>
 </html>

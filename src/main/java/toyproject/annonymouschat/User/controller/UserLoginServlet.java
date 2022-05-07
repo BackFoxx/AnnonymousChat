@@ -31,7 +31,7 @@ public class UserLoginServlet implements Controller {
             response.sendRedirect("/");
         } else {
             log.info("로그인 실패");
-            response.sendRedirect("/login/login-form");
+            response.sendRedirect("/v/login/login-form");
         }
     }
 }

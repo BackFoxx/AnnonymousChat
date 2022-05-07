@@ -7,6 +7,7 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.service.ChatService;
+import toyproject.annonymouschat.config.controller.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -18,13 +19,13 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-@WebServlet(name = "chat/post/save", urlPatterns = "/chat/post/save")
-public class ChatPostSaveServlet extends HttpServlet {
+//@WebServlet(name = "chat/post/save", urlPatterns = "/v/chat/post/save")
+public class ChatPostSaveServlet implements Controller {
     private ChatService chatService = new ChatService();
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ServletInputStream inputStream = request.getInputStream();
         String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
@@ -33,7 +34,7 @@ public class ChatPostSaveServlet extends HttpServlet {
 
         chatService.save(chat);
 
-        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "저장 완료되었습니다.", "/chat/mypostbox");
+        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "저장 완료되었습니다.", "/v/chat/mypostbox");
         String result = objectMapper.writeValueAsString(responseDto);
 
         response.setCharacterEncoding("UTF-8");

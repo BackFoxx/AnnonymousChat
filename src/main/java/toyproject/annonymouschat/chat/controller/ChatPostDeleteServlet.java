@@ -6,6 +6,7 @@ import org.springframework.util.StreamUtils;
 import toyproject.annonymouschat.chat.dto.ChatDeleteDto;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.service.ChatService;
+import toyproject.annonymouschat.config.controller.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -17,20 +18,20 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-@WebServlet(name = "chat/post/delete", urlPatterns = "/chat/post/delete")
-public class ChatPostDeleteServlet extends HttpServlet {
+//@WebServlet(name = "chat/post/delete", urlPatterns = "/v/chat/post/delete")
+public class ChatPostDeleteServlet implements Controller {
 
     ObjectMapper objectMapper = new ObjectMapper();
     ChatService chatService = new ChatService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletInputStream inputStream = request.getInputStream();
         String message = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         ChatDeleteDto dto = objectMapper.readValue(message, ChatDeleteDto.class);
         chatService.delete(dto);
 
-        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/chat/mypostbox");
+        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/v/chat/mypostbox");
         String result = objectMapper.writeValueAsString(responseDto);
         response.getWriter().write(result);
 

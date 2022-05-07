@@ -45,7 +45,7 @@
 
         $.ajax({
             type: 'post',
-            url: '/chat/post/save',
+            url: '/v/chat/post/save',
             headers: {'Content-Type': 'application/json'},
             data: JSON.stringify(chat),
             success: function (result) {

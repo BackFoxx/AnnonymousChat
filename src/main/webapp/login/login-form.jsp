@@ -34,7 +34,7 @@
         </div>
         <div class="col mt-3 text-end">
             <button type="submit" class="w-25 btn btn-primary btn-sm">로그인</button>
-            <a href="/login/registration-form"><button type="button" class="w-auto btn btn-outline-success btn-sm">회원가입</button></a>
+            <a href="/v/login/registration-form"><button type="button" class="w-auto btn btn-outline-success btn-sm">회원가입</button></a>
         </div>
     </form>
 </div>

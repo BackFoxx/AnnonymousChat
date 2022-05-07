@@ -27,7 +27,7 @@ public class UserRegistrationServlet implements Controller {
         String savedEmail = userService.registration(registrationDto);
 
         request.setAttribute("savedEmail", savedEmail);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/login/login-form");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/v/login/login-form");
         requestDispatcher.forward(request, response);
     }
 }
