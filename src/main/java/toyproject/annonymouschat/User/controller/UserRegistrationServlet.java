@@ -3,6 +3,7 @@ package toyproject.annonymouschat.User.controller;
 import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.User.dto.UserRegistrationDto;
 import toyproject.annonymouschat.User.service.UserService;
+import toyproject.annonymouschat.config.controller.Controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(name = "registration", urlPatterns = "/login/registration")
-public class UserRegistrationServlet extends HttpServlet {
+//@WebServlet(name = "registration", urlPatterns = "/login/registration")
+public class UserRegistrationServlet implements Controller {
     private UserService userService = new UserService();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         String password = request.getParameter("password");
 

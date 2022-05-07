@@ -12,7 +12,7 @@ import java.io.IOException;
 @Slf4j
 public class LoginFilter implements Filter {
     private UserSession userSession = new UserSession();
-    private final String[] whiteLists = {"/", "/login", "/login/*", "/logout", "/css/*", "/js/*"};
+    private final String[] whiteLists = {"/", "/v/**", "/login", "/login/*", "/logout", "/css/*", "/js/*"};
     // 필터를 거치지 않는 URI들
 
     @Override

@@ -17,7 +17,7 @@
         </ul>
         <a href="/"><h3 class="text-muted">RandomChat</h3></a>
     </div>
-    <form method="post" action="/login" class="jumbotron">
+    <form method="post" action="/v/login" class="jumbotron">
         <h1>RandomChat</h1>
         <p class="lead">로그인</p>
         <div class="mb-3 row">

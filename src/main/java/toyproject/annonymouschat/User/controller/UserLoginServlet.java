@@ -5,6 +5,7 @@ import toyproject.annonymouschat.User.dto.UserLoginDto;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.User.service.UserService;
 import toyproject.annonymouschat.User.session.UserSession;
+import toyproject.annonymouschat.config.controller.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,13 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@WebServlet(name = "login", urlPatterns = "/login")
-public class UserLoginServlet extends HttpServlet {
+public class UserLoginServlet implements Controller {
     UserService userService = new UserService();
     UserSession userSession = new UserSession();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         String password = request.getParameter("password");
         UserLoginDto userLoginDto = new UserLoginDto(userEmail, password);

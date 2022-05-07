@@ -1,6 +1,7 @@
 package toyproject.annonymouschat.User.controller;
 
 import toyproject.annonymouschat.User.session.UserSession;
+import toyproject.annonymouschat.config.controller.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,12 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "logout", urlPatterns = "/logout")
-public class UserLogoutServlet extends HttpServlet {
+public class UserLogoutServlet implements Controller {
     private UserSession userSession = new UserSession();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         userSession.expire(request, response);
         response.sendRedirect("/");
     }
