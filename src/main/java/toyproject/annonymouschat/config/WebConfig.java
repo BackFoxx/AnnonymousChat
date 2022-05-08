@@ -14,7 +14,7 @@ import javax.servlet.Filter;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("forward:/index.jsp");
+        registry.addViewController("/").setViewName("forward:/v/");
     }
 
     @Bean

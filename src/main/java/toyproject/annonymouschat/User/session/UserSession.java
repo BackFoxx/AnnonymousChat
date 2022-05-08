@@ -52,6 +52,7 @@ public class UserSession {
         if (sessionCookie != null) {
             sessionStore.remove(sessionCookie.getValue());
             sessionCookie.setMaxAge(0);
+            sessionCookie.setPath("/");
             response.addCookie(sessionCookie);
         }
     }
