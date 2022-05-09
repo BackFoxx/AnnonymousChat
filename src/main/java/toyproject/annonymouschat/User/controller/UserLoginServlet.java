@@ -6,6 +6,7 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.User.service.UserService;
 import toyproject.annonymouschat.User.session.UserSession;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyRedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ public class UserLoginServlet implements Controller {
     UserSession userSession = new UserSession();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyRedirectView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         String password = request.getParameter("password");
         UserLoginDto userLoginDto = new UserLoginDto(userEmail, password);
@@ -28,10 +29,10 @@ public class UserLoginServlet implements Controller {
         User loginUser = userService.login(userLoginDto);
         if (loginUser != null) {
             userSession.createSession(loginUser, response);
-            response.sendRedirect("/");
+            return new MyRedirectView("/");
         } else {
             log.info("로그인 실패");
-            response.sendRedirect("/v/login/login-form");
+            return new MyRedirectView("/v/login/login-form");
         }
     }
 }

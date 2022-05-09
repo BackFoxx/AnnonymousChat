@@ -59,6 +59,16 @@ public class FrontController extends HttpServlet {
         log.info("FrontController 호출, URI = {}", requestURI);
 
         Controller controller = controllerMap.get(requestURI);
-        controller.process(request, response);
+        Object result = controller.process(request, response);
+
+        if (result instanceof MyForwardView) {
+            ((MyForwardView) result).render(request, response);
+        }
+        else if (result instanceof MyJson) {
+            ((MyJson) result).render(request, response);
+        }
+        else if (result instanceof MyRedirectView) {
+            ((MyRedirectView) result).render(request, response);
+        }
     }
 }

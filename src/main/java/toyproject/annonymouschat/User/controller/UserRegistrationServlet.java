@@ -4,11 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.User.dto.UserRegistrationDto;
 import toyproject.annonymouschat.User.service.UserService;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyForwardView;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,7 +17,7 @@ public class UserRegistrationServlet implements Controller {
     private UserService userService = new UserService();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyForwardView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userEmail = request.getParameter("userEmail");
         String password = request.getParameter("password");
 
@@ -27,7 +25,6 @@ public class UserRegistrationServlet implements Controller {
         String savedEmail = userService.registration(registrationDto);
 
         request.setAttribute("savedEmail", savedEmail);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/v/login/login-form");
-        requestDispatcher.forward(request, response);
+        return new MyForwardView("/v/login/login-form");
     }
 }

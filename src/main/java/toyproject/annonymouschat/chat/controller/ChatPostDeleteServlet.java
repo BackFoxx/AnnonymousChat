@@ -7,6 +7,7 @@ import toyproject.annonymouschat.chat.dto.ChatDeleteDto;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyJson;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -25,16 +26,14 @@ public class ChatPostDeleteServlet implements Controller {
     ChatService chatService = new ChatService();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletInputStream inputStream = request.getInputStream();
         String message = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
         ChatDeleteDto dto = objectMapper.readValue(message, ChatDeleteDto.class);
         chatService.delete(dto);
 
         ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/v/chat/mypostbox");
-        String result = objectMapper.writeValueAsString(responseDto);
-        response.getWriter().write(result);
 
-        log.info("result = {}", result);
+        return new MyJson(responseDto);
     }
 }

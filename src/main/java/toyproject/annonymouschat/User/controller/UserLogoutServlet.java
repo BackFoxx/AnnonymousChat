@@ -2,6 +2,7 @@ package toyproject.annonymouschat.User.controller;
 
 import toyproject.annonymouschat.User.session.UserSession;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyRedirectView;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,8 +15,8 @@ public class UserLogoutServlet implements Controller {
     private UserSession userSession = new UserSession();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyRedirectView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         userSession.expire(request, response);
-        response.sendRedirect("/");
+        return new MyRedirectView("/");
     }
 }

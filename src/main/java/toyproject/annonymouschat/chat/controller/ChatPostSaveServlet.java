@@ -8,6 +8,7 @@ import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyJson;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -25,7 +26,7 @@ public class ChatPostSaveServlet implements Controller {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ServletInputStream inputStream = request.getInputStream();
         String messageBody = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
@@ -35,12 +36,6 @@ public class ChatPostSaveServlet implements Controller {
         chatService.save(chat);
 
         ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "저장 완료되었습니다.", "/v/chat/mypostbox");
-        String result = objectMapper.writeValueAsString(responseDto);
-
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(result);
-
-        log.info("saved content = {}", chat);
-        log.info("result = {}", result);
+        return new MyJson(responseDto);
     }
 }

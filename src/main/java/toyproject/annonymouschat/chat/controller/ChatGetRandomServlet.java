@@ -6,6 +6,7 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyJson;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,14 +22,10 @@ public class ChatGetRandomServlet implements Controller {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long userId = ((User) request.getAttribute("user")).getId();
         Chat randomChat = chatService.getRandom(userId);
-        String json = objectMapper.writeValueAsString(randomChat);
 
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
-
-        log.info("랜덤 편지 가져옴");
+        return new MyJson(randomChat);
     }
 }

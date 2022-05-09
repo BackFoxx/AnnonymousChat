@@ -2,6 +2,7 @@ package toyproject.annonymouschat.replychat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.MyJson;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDeleteResponseDto;
 import toyproject.annonymouschat.replychat.dto.ReplyDeleteDto;
 import toyproject.annonymouschat.replychat.service.ReplyChatService;
@@ -21,14 +22,13 @@ public class ReplyDeleteServlet implements Controller {
     private ReplyChatService replyChatService = new ReplyChatService();
 
     @Override
-    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServletInputStream inputStream = request.getInputStream();
         ReplyDeleteDto dto = objectMapper.readValue(inputStream, ReplyDeleteDto.class);
         replyChatService.deleteReply(dto);
 
         ReplyChatSaveDeleteResponseDto responseDto = new ReplyChatSaveDeleteResponseDto(true, "삭제 완료되었습니다", "/v/chat/myreply");
 
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(objectMapper.writeValueAsString(responseDto));
+        return new MyJson(responseDto);
     }
 }
