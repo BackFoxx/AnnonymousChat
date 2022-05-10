@@ -19,6 +19,6 @@ public class ChatPostBoxServlet implements Controller {
     @ReturnType(type = ReturnType.ReturnTypes.FORWARD)
     public ModelView process(Map<String, Object> requestParameters) {
         log.info("jsp 호출");
-        return new ModelView("/chat/postbox.jsp");
+        return new ModelView("chat/postbox");
     }
 }

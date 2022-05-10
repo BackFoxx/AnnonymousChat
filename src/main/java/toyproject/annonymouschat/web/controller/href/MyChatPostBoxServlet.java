@@ -29,7 +29,7 @@ public class MyChatPostBoxServlet implements Controller {
         Long userId = ((User) requestParameters.get("user")).getId();
         List<MyChatPostBoxResponseDto> findChats = chatService.findAllByUserId(userId);
 
-        ModelView modelView = new ModelView("/chat/mypostbox.jsp");
+        ModelView modelView = new ModelView("chat/mypostbox");
         modelView.getModel().put("findChats", findChats);
         return modelView;
     }

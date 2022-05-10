@@ -69,7 +69,7 @@ public class FrontController extends HttpServlet {
         Map<String, Object> requestParameters = setRequestParametersToMap(request, response);
         ModelView modelView = controller.process(requestParameters);
 
-        Object result = viewResolver(controller, modelView);
+        Object result = ReturnTypeResolver(controller, modelView);
 
         if (result instanceof MyForwardView) ((MyForwardView) result).render(modelView.getModel(), request, response);
         else if (result instanceof MyJson) ((MyJson) result).render(response);
@@ -117,7 +117,7 @@ public class FrontController extends HttpServlet {
         return requestParameters;
     }
 
-    private Object viewResolver(Controller controller, ModelView modelView) {
+    private Object ReturnTypeResolver(Controller controller, ModelView modelView) {
         /*
         * 컨트롤러의 @ReturnType 어노테이션을 분석하여
         * 컨트롤러가 redirect 하는지, forward 하는지, Json을 응답하는지 판별하여
@@ -129,7 +129,7 @@ public class FrontController extends HttpServlet {
                     .getAnnotation(ReturnType.class).type();
 
             if (returnType == ReturnType.ReturnTypes.FORWARD) {
-                return new MyForwardView(modelView.getViewName());
+                return new MyForwardView(viewResolver(modelView.getViewName()));
             }
             else if (returnType == ReturnType.ReturnTypes.REDIRECT)
                 return new MyRedirectView(modelView.getViewName());
@@ -141,5 +141,9 @@ public class FrontController extends HttpServlet {
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String viewResolver(String viewName) {
+        return  "/" + viewName + ".jsp";
     }
 }

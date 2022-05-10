@@ -7,6 +7,8 @@ import toyproject.annonymouschat.config.controller.Controller;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Slf4j
@@ -15,7 +17,7 @@ public class UserRegistrationServlet implements Controller {
     private UserService userService = new UserService();
 
     @Override
-    @ReturnType(type = ReturnType.ReturnTypes.FORWARD)
+    @ReturnType(type = ReturnType.ReturnTypes.REDIRECT)
     public ModelView process(Map<String, Object> requestParameters) {
         String userEmail = (String) requestParameters.get("userEmail");
         String password = (String) requestParameters.get("password");
@@ -24,7 +26,13 @@ public class UserRegistrationServlet implements Controller {
         String savedEmail = userService.registration(registrationDto);
 
         ModelView modelView = new ModelView("/v/login/login-form");
-        modelView.getModel().put("savedEmail", savedEmail);
+
+        HttpServletResponse httpServletResponse = (HttpServletResponse) requestParameters.get("httpServletResponse");
+        Cookie registerEmailCookie = new Cookie("registerEmail", userEmail);
+        registerEmailCookie.setPath("/v/login/login-form");
+        registerEmailCookie.setMaxAge(1);
+        httpServletResponse.addCookie(registerEmailCookie);
+
         return modelView;
     }
 }

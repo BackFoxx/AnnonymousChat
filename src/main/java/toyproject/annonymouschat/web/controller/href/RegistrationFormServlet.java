@@ -19,6 +19,6 @@ public class RegistrationFormServlet implements Controller {
     @ReturnType(type = ReturnType.ReturnTypes.FORWARD)
     public ModelView process(Map<String, Object> requestParameters) {
         log.info("jsp 호출");
-        return new ModelView("/login/registration-form.jsp");
+        return new ModelView("login/registration-form");
     }
 }

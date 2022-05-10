@@ -28,7 +28,7 @@ public class MyRepliesServlet implements Controller {
 
         List<RepliesByUserIdResponseDto> replies = replyChatService.findAllByUserId(dto);
 
-        ModelView modelView = new ModelView("/chat/replychat/myreplies.jsp");
+        ModelView modelView = new ModelView("chat/replychat/myreplies");
         modelView.getModel().put("replies", replies);
         return modelView;
     }
