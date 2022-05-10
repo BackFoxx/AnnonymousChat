@@ -13,11 +13,13 @@ import toyproject.annonymouschat.replychat.controller.ReplySaveServlet;
 import toyproject.annonymouschat.web.controller.href.*;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,16 +61,85 @@ public class FrontController extends HttpServlet {
         log.info("FrontController 호출, URI = {}", requestURI);
 
         Controller controller = controllerMap.get(requestURI);
-        Object result = controller.process(request, response);
+        if (controller == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
-        if (result instanceof MyForwardView) {
-            ((MyForwardView) result).render(request, response);
+        Map<String, Object> requestParameters = setRequestParametersToMap(request, response);
+        ModelView modelView = controller.process(requestParameters);
+
+        Object result = viewResolver(controller, modelView);
+
+        if (result instanceof MyForwardView) ((MyForwardView) result).render(modelView.getModel(), request, response);
+        else if (result instanceof MyJson) ((MyJson) result).render(response);
+        else if (result instanceof MyRedirectView) ((MyRedirectView) result).render(modelView.getModel(), request, response);
+
+        log.info("--------- 호출 완료! ------------");
+    }
+
+    private Map<String, Object> setRequestParametersToMap(HttpServletRequest request, HttpServletResponse response) {
+        Map<String, Object> requestParameters = new HashMap<>();
+        /*
+        * request의 attributes를 Map 객체에 담는다.
+        * */
+        Enumeration<String> attributeNames = request.getAttributeNames();
+        while (attributeNames.hasMoreElements()) {
+            String attributeName = attributeNames.nextElement();
+            requestParameters.put(attributeName, request.getAttribute(attributeName));
         }
-        else if (result instanceof MyJson) {
-            ((MyJson) result).render(request, response);
+
+        /*
+        * request의 파라미터를 Map 객체에 담는다,
+        * */
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String parameterName = parameterNames.nextElement();
+            requestParameters.put(parameterName, request.getParameter(parameterName));
         }
-        else if (result instanceof MyRedirectView) {
-            ((MyRedirectView) result).render(request, response);
+
+        /*
+        * request Body의 내용을 Map 객체의 requestBody 값으로 담는다.
+        * */
+        try {
+            ServletInputStream inputStream = request.getInputStream();
+            requestParameters.put("requestBody", inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        /*
+        * request, response 객체도 넣어 선택적으로 쓸 수 있게 해주었다.
+        * */
+        requestParameters.put("httpServletRequest", request);
+        requestParameters.put("httpServletResponse", response);
+
+        return requestParameters;
+    }
+
+    private Object viewResolver(Controller controller, ModelView modelView) {
+        /*
+        * 컨트롤러의 @ReturnType 어노테이션을 분석하여
+        * 컨트롤러가 redirect 하는지, forward 하는지, Json을 응답하는지 판별하여
+        * 그에 맞는 다음 단계를 지정한다.
+        * */
+
+        try {
+            ReturnType.ReturnTypes returnType = controller.getClass().getMethod("process", Map.class)
+                    .getAnnotation(ReturnType.class).type();
+
+            if (returnType == ReturnType.ReturnTypes.FORWARD) {
+                return new MyForwardView(modelView.getViewName());
+            }
+            else if (returnType == ReturnType.ReturnTypes.REDIRECT)
+                return new MyRedirectView(modelView.getViewName());
+            else if (returnType == ReturnType.ReturnTypes.JSON) {
+                return new MyJson(modelView.getModel().get("response"));
+            } else {
+                throw new RuntimeException("어노테이션 설정 안됨");
+            }
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
     }
 }
