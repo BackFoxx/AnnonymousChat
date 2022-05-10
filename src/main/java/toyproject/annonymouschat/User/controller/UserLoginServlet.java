@@ -6,7 +6,9 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.User.service.UserService;
 import toyproject.annonymouschat.User.session.UserSession;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.MyRedirectView;
+import toyproject.annonymouschat.config.controller.ReturnType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 public class UserLoginServlet implements Controller {
@@ -21,18 +24,21 @@ public class UserLoginServlet implements Controller {
     UserSession userSession = new UserSession();
 
     @Override
-    public MyRedirectView process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userEmail = request.getParameter("userEmail");
-        String password = request.getParameter("password");
+    @ReturnType(type = ReturnType.ReturnTypes.REDIRECT)
+    public ModelView process(Map<String, Object> requestParameters) {
+        String userEmail = (String) requestParameters.get("userEmail");
+        String password = (String) requestParameters.get("password");
         UserLoginDto userLoginDto = new UserLoginDto(userEmail, password);
 
         User loginUser = userService.login(userLoginDto);
         if (loginUser != null) {
+            HttpServletResponse response = (HttpServletResponse) requestParameters.get("httpServletResponse");
             userSession.createSession(loginUser, response);
-            return new MyRedirectView("/");
+            return new ModelView("/");
         } else {
             log.info("로그인 실패");
-            return new MyRedirectView("/v/login/login-form");
+            return new ModelView("/v/login/login-form");
         }
     }
+
 }

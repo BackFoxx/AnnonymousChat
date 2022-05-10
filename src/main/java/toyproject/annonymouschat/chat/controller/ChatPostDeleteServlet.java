@@ -7,7 +7,9 @@ import toyproject.annonymouschat.chat.dto.ChatDeleteDto;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.MyJson;
+import toyproject.annonymouschat.config.controller.ReturnType;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @Slf4j
 //@WebServlet(name = "chat/post/delete", urlPatterns = "/v/chat/post/delete")
@@ -26,14 +29,20 @@ public class ChatPostDeleteServlet implements Controller {
     ChatService chatService = new ChatService();
 
     @Override
-    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletInputStream inputStream = request.getInputStream();
-        String message = StreamUtils.copyToString(inputStream, StandardCharsets.UTF_8);
-        ChatDeleteDto dto = objectMapper.readValue(message, ChatDeleteDto.class);
-        chatService.delete(dto);
+    @ReturnType(type = ReturnType.ReturnTypes.JSON)
+    public ModelView process(Map<String, Object> requestParameters) {
+        ServletInputStream requestBody = (ServletInputStream) requestParameters.get("requestBody");
+        try {
+            ChatDeleteDto dto = objectMapper.readValue(requestBody, ChatDeleteDto.class);
+            chatService.delete(dto);
 
-        ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/v/chat/mypostbox");
+            ChatPostSaveDeleteResponseDto responseDto = new ChatPostSaveDeleteResponseDto(true, "okok", "/v/chat/mypostbox");
 
-        return new MyJson(responseDto);
+            ModelView modelView = new ModelView();
+            modelView.getModel().put("response", responseDto);
+            return modelView;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

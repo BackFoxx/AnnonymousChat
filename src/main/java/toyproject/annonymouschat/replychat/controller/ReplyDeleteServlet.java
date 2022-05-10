@@ -2,7 +2,9 @@ package toyproject.annonymouschat.replychat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.MyJson;
+import toyproject.annonymouschat.config.controller.ReturnType;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDeleteResponseDto;
 import toyproject.annonymouschat.replychat.dto.ReplyDeleteDto;
 import toyproject.annonymouschat.replychat.service.ReplyChatService;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 //@WebServlet(name = "replyDelete", urlPatterns = "/v/reply/delete")
 public class ReplyDeleteServlet implements Controller {
@@ -22,13 +25,19 @@ public class ReplyDeleteServlet implements Controller {
     private ReplyChatService replyChatService = new ReplyChatService();
 
     @Override
-    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServletInputStream inputStream = request.getInputStream();
-        ReplyDeleteDto dto = objectMapper.readValue(inputStream, ReplyDeleteDto.class);
-        replyChatService.deleteReply(dto);
+    @ReturnType(type = ReturnType.ReturnTypes.JSON)
+    public ModelView process(Map<String, Object> requestParameters) {
+        try {
+            ReplyDeleteDto dto = objectMapper.readValue(((ServletInputStream) requestParameters.get("requestBody")), ReplyDeleteDto.class);
+            replyChatService.deleteReply(dto);
 
-        ReplyChatSaveDeleteResponseDto responseDto = new ReplyChatSaveDeleteResponseDto(true, "삭제 완료되었습니다", "/v/chat/myreply");
+            ReplyChatSaveDeleteResponseDto responseDto = new ReplyChatSaveDeleteResponseDto(true, "삭제 완료되었습니다", "/v/chat/myreply");
+            ModelView modelView = new ModelView();
+            modelView.getModel().put("response", responseDto);
 
-        return new MyJson(responseDto);
+            return modelView;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

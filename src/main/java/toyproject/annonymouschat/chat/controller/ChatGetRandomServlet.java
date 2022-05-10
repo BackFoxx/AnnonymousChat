@@ -6,7 +6,9 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.MyJson;
+import toyproject.annonymouschat.config.controller.ReturnType;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @Slf4j
 //@WebServlet(name = "/chat/postbox/random", urlPatterns = "/v/chat/postbox/random")
@@ -22,10 +25,13 @@ public class ChatGetRandomServlet implements Controller {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public MyJson process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long userId = ((User) request.getAttribute("user")).getId();
+    @ReturnType(type = ReturnType.ReturnTypes.JSON)
+    public ModelView process(Map<String, Object> requestParameters) {
+        Long userId = ((User) requestParameters.get("user")).getId();
         Chat randomChat = chatService.getRandom(userId);
 
-        return new MyJson(randomChat);
+        ModelView modelView = new ModelView();
+        modelView.getModel().put("response", randomChat);
+        return modelView;
     }
 }
