@@ -3,7 +3,7 @@ package toyproject.annonymouschat.User.controller;
 import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.User.dto.UserRegistrationDto;
 import toyproject.annonymouschat.User.service.UserService;
-import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Slf4j
 //@WebServlet(name = "registration", urlPatterns = "/login/registration")
-public class UserRegistrationServlet implements Controller {
+public class UserRegistrationServlet implements ControllerWithMap {
     private UserService userService = new UserService();
 
     @Override

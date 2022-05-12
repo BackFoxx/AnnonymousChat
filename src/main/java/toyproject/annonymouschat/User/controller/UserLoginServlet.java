@@ -5,21 +5,15 @@ import toyproject.annonymouschat.User.dto.UserLoginDto;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.User.service.UserService;
 import toyproject.annonymouschat.User.session.UserSession;
-import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
-import toyproject.annonymouschat.config.controller.MyRedirectView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
-public class UserLoginServlet implements Controller {
+public class UserLoginServlet implements ControllerWithMap {
     UserService userService = new UserService();
     UserSession userSession = new UserSession();
 

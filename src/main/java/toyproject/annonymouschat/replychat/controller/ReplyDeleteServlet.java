@@ -1,26 +1,19 @@
 package toyproject.annonymouschat.replychat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import toyproject.annonymouschat.config.controller.Controller;
+import toyproject.annonymouschat.config.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
-import toyproject.annonymouschat.config.controller.MyJson;
 import toyproject.annonymouschat.config.controller.ReturnType;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDeleteResponseDto;
 import toyproject.annonymouschat.replychat.dto.ReplyDeleteDto;
 import toyproject.annonymouschat.replychat.service.ReplyChatService;
 
-import javax.naming.ldap.Control;
-import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
 //@WebServlet(name = "replyDelete", urlPatterns = "/v/reply/delete")
-public class ReplyDeleteServlet implements Controller {
+public class ReplyDeleteServlet implements ControllerWithMap {
     private ObjectMapper objectMapper = new ObjectMapper();
     private ReplyChatService replyChatService = new ReplyChatService();
 

@@ -7,26 +7,29 @@ import toyproject.annonymouschat.User.controller.UserRegistrationServlet;
 import toyproject.annonymouschat.chat.controller.ChatGetRandomServlet;
 import toyproject.annonymouschat.chat.controller.ChatPostDeleteServlet;
 import toyproject.annonymouschat.chat.controller.ChatPostSaveServlet;
+import toyproject.annonymouschat.config.controlleradaptor.ControllerAdaptor;
+import toyproject.annonymouschat.config.controlleradaptor.ControllerResponseJsonAdaptor;
+import toyproject.annonymouschat.config.controlleradaptor.ControllerWithMapAdaptor;
+import toyproject.annonymouschat.config.controlleradaptor.ControllerWithTwoMapAdaptor;
 import toyproject.annonymouschat.replychat.controller.RepliesByChatIdServlet;
 import toyproject.annonymouschat.replychat.controller.ReplyDeleteServlet;
 import toyproject.annonymouschat.replychat.controller.ReplySaveServlet;
 import toyproject.annonymouschat.web.controller.href.*;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Method;
+import java.util.*;
 
 @Slf4j
 @WebServlet(urlPatterns = {"/v/*"})
 public class FrontController extends HttpServlet {
-    Map<String, Controller> controllerMap = new HashMap<>();
+    Map<String, Object> controllerMap = new HashMap<>();
+    List<ControllerAdaptor> controllerAdaptorList = new ArrayList<>();
 
     public FrontController() {
         //User
@@ -53,6 +56,11 @@ public class FrontController extends HttpServlet {
         controllerMap.put("/v/chat/myreply", new MyRepliesServlet());
         controllerMap.put("/v/login/registration-form", new RegistrationFormServlet());
         controllerMap.put("/v/replyForm", new ReplyChatFormServlet());
+
+        //Adaptor
+        controllerAdaptorList.add(new ControllerWithMapAdaptor());
+        controllerAdaptorList.add(new ControllerWithTwoMapAdaptor());
+        controllerAdaptorList.add(new ControllerResponseJsonAdaptor());
     }
 
     @Override
@@ -60,14 +68,18 @@ public class FrontController extends HttpServlet {
         String requestURI = request.getRequestURI();
         log.info("FrontController 호출, URI = {}", requestURI);
 
-        Controller controller = controllerMap.get(requestURI);
+        Object controller = controllerMap.get(requestURI);
         if (controller == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        Map<String, Object> requestParameters = setRequestParametersToMap(request, response);
-        ModelView modelView = controller.process(requestParameters);
+        ControllerAdaptor adaptor = assignControllerAdaptor(controller);
+
+        log.info("ControllerAdaptor = {}", adaptor.getClass());
+        log.info("Controller = {}", controller.getClass());
+
+        ModelView modelView = adaptor.handle(request, response, controller);
 
         Object result = ReturnTypeResolver(controller, modelView);
 
@@ -78,46 +90,14 @@ public class FrontController extends HttpServlet {
         log.info("--------- 호출 완료! ------------");
     }
 
-    private Map<String, Object> setRequestParametersToMap(HttpServletRequest request, HttpServletResponse response) {
-        Map<String, Object> requestParameters = new HashMap<>();
-        /*
-        * request의 attributes를 Map 객체에 담는다.
-        * */
-        Enumeration<String> attributeNames = request.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            requestParameters.put(attributeName, request.getAttribute(attributeName));
+    private ControllerAdaptor assignControllerAdaptor(Object controller) {
+        for (ControllerAdaptor adaptor : controllerAdaptorList) {
+            if (adaptor.supports(controller)) return adaptor;
         }
-
-        /*
-        * request의 파라미터를 Map 객체에 담는다,
-        * */
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String parameterName = parameterNames.nextElement();
-            requestParameters.put(parameterName, request.getParameter(parameterName));
-        }
-
-        /*
-        * request Body의 내용을 Map 객체의 requestBody 값으로 담는다.
-        * */
-        try {
-            ServletInputStream inputStream = request.getInputStream();
-            requestParameters.put("requestBody", inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        /*
-        * request, response 객체도 넣어 선택적으로 쓸 수 있게 해주었다.
-        * */
-        requestParameters.put("httpServletRequest", request);
-        requestParameters.put("httpServletResponse", response);
-
-        return requestParameters;
+        throw new RuntimeException("잘못된 형식의 컨트롤러");
     }
 
-    private Object ReturnTypeResolver(Controller controller, ModelView modelView) {
+    private Object ReturnTypeResolver(Object controller, ModelView modelView) {
         /*
         * 컨트롤러의 @ReturnType 어노테이션을 분석하여
         * 컨트롤러가 redirect 하는지, forward 하는지, Json을 응답하는지 판별하여
@@ -125,8 +105,11 @@ public class FrontController extends HttpServlet {
         * */
 
         try {
-            ReturnType.ReturnTypes returnType = controller.getClass().getMethod("process", Map.class)
-                    .getAnnotation(ReturnType.class).type();
+            Method process = Arrays.stream(controller.getClass().getMethods())
+                    .filter(method -> method.getName().equals("process")).findAny()
+                    .orElseThrow(() -> new NoSuchMethodException("잘못된 컨트롤러 형식"));
+
+            ReturnType.ReturnTypes returnType = process.getAnnotation(ReturnType.class).type();
 
             if (returnType == ReturnType.ReturnTypes.FORWARD) {
                 return new MyForwardView(viewResolver(modelView.getViewName()));
