@@ -1,6 +1,5 @@
 package toyproject.annonymouschat.chat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.model.Chat;
@@ -13,7 +12,6 @@ import java.util.Map;
 @Slf4j
 public class ChatGetRandomServlet implements ControllerResponseJson {
     private ChatService chatService = new ChatService();
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @ReturnType(type = ReturnType.ReturnTypes.JSON)

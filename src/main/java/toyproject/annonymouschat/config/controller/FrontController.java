@@ -7,10 +7,7 @@ import toyproject.annonymouschat.User.controller.UserRegistrationServlet;
 import toyproject.annonymouschat.chat.controller.ChatGetRandomServlet;
 import toyproject.annonymouschat.chat.controller.ChatPostDeleteServlet;
 import toyproject.annonymouschat.chat.controller.ChatPostSaveServlet;
-import toyproject.annonymouschat.config.controlleradaptor.ControllerAdaptor;
-import toyproject.annonymouschat.config.controlleradaptor.ControllerResponseJsonAdaptor;
-import toyproject.annonymouschat.config.controlleradaptor.ControllerWithMapAdaptor;
-import toyproject.annonymouschat.config.controlleradaptor.ControllerWithTwoMapAdaptor;
+import toyproject.annonymouschat.config.controlleradaptor.*;
 import toyproject.annonymouschat.replychat.controller.RepliesByChatIdServlet;
 import toyproject.annonymouschat.replychat.controller.ReplyDeleteServlet;
 import toyproject.annonymouschat.replychat.controller.ReplySaveServlet;
@@ -61,6 +58,7 @@ public class FrontController extends HttpServlet {
         controllerAdaptorList.add(new ControllerWithMapAdaptor());
         controllerAdaptorList.add(new ControllerWithTwoMapAdaptor());
         controllerAdaptorList.add(new ControllerResponseJsonAdaptor());
+        controllerAdaptorList.add(new ControllerAutoJsonAdaptor());
     }
 
     @Override
