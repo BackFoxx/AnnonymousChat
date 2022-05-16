@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.config.controller;
+package toyproject.annonymouschat.config.controller.controller;
 
 import java.util.Map;
 

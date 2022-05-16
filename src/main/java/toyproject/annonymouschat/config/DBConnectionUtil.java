@@ -1,7 +1,9 @@
 package toyproject.annonymouschat.config;
 
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,9 +18,19 @@ RuntimeException으로 변환하여 던집니다.
 */
 @Slf4j
 public class DBConnectionUtil {
+    private static DataSource dataSource;
+
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            if (dataSource == null) {
+                HikariDataSource hikariDataSource = new HikariDataSource();
+                hikariDataSource.setJdbcUrl(URL);
+                hikariDataSource.setUsername(USERNAME);
+                hikariDataSource.setPassword(PASSWORD);
+                hikariDataSource.setMaximumPoolSize(10);
+                dataSource = hikariDataSource;
+            }
+            return dataSource.getConnection();
         } catch (SQLException e) {
             log.error("exception", e);
             throw new RuntimeException(e);

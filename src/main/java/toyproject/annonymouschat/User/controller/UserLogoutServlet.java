@@ -1,7 +1,7 @@
 package toyproject.annonymouschat.User.controller;
 
 import toyproject.annonymouschat.User.session.UserSession;
-import toyproject.annonymouschat.config.controller.ControllerWithMap;
+import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 

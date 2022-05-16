@@ -20,6 +20,7 @@ public class ReplyChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getContent());
             pstmt.setLong(2, dto.getChatId());
@@ -41,6 +42,7 @@ public class ReplyChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, dto.getChatId());
 
@@ -70,6 +72,7 @@ public class ReplyChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, dto.getUserId());
 
@@ -103,6 +106,7 @@ public class ReplyChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, dto.getReplyId());
 

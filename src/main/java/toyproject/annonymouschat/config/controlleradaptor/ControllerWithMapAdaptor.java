@@ -1,6 +1,6 @@
 package toyproject.annonymouschat.config.controlleradaptor;
 
-import toyproject.annonymouschat.config.controller.ControllerWithMap;
+import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
 
 import javax.servlet.ServletInputStream;

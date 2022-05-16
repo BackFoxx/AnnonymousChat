@@ -1,6 +1,6 @@
 package toyproject.annonymouschat.replychat.controller;
 
-import toyproject.annonymouschat.config.controller.ControllerAutoJson;
+import toyproject.annonymouschat.config.controller.controller.ControllerAutoJson;
 import toyproject.annonymouschat.config.controller.RequestBody;
 import toyproject.annonymouschat.config.controller.ReturnType;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDeleteResponseDto;

@@ -6,7 +6,7 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.service.ChatService;
-import toyproject.annonymouschat.config.controller.ControllerResponseJson;
+import toyproject.annonymouschat.config.controller.controller.ControllerResponseJson;
 import toyproject.annonymouschat.config.controller.ReturnType;
 
 import javax.servlet.ServletInputStream;

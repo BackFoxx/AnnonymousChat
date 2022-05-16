@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.chat.dto.ChatDeleteDto;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.service.ChatService;
-import toyproject.annonymouschat.config.controller.ControllerAutoJson;
+import toyproject.annonymouschat.config.controller.controller.ControllerAutoJson;
 import toyproject.annonymouschat.config.controller.RequestBody;
 import toyproject.annonymouschat.config.controller.ReturnType;
 

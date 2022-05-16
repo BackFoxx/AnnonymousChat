@@ -3,7 +3,7 @@ package toyproject.annonymouschat.replychat.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import toyproject.annonymouschat.User.model.User;
-import toyproject.annonymouschat.config.controller.ControllerWithMap;
+import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 import toyproject.annonymouschat.replychat.dto.ReplyChatSaveDto;

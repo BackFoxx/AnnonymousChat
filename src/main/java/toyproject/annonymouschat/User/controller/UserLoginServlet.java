@@ -5,7 +5,7 @@ import toyproject.annonymouschat.User.dto.UserLoginDto;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.User.service.UserService;
 import toyproject.annonymouschat.User.session.UserSession;
-import toyproject.annonymouschat.config.controller.ControllerWithMap;
+import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 

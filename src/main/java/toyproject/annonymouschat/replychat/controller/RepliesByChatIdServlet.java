@@ -1,7 +1,7 @@
 package toyproject.annonymouschat.replychat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import toyproject.annonymouschat.config.controller.ControllerWithMap;
+import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 import toyproject.annonymouschat.replychat.dto.RepliesByChatIdDto;
@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class RepliesByChatIdServlet implements ControllerWithMap {
     private ReplyChatService replyChatService = new ReplyChatService();
-    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     @ReturnType(type = ReturnType.ReturnTypes.JSON)

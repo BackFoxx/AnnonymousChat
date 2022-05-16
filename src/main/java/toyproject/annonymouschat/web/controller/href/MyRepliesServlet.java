@@ -1,7 +1,7 @@
 package toyproject.annonymouschat.web.controller.href;
 
 import toyproject.annonymouschat.User.model.User;
-import toyproject.annonymouschat.config.controller.ControllerWithTwoMap;
+import toyproject.annonymouschat.config.controller.controller.ControllerWithTwoMap;
 import toyproject.annonymouschat.config.controller.ReturnType;
 import toyproject.annonymouschat.replychat.dto.RepliesByUserIdDto;
 import toyproject.annonymouschat.replychat.dto.RepliesByUserIdResponseDto;

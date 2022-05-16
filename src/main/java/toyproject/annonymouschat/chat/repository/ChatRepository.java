@@ -23,6 +23,7 @@ public class ChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             // Statement.RETURN_GENERATED_KEYS -> 생성된 컬럼의 아이디를 반환하는 파라미터
             pstmt.setString(1, chatSaveDto.getContent());
@@ -56,6 +57,7 @@ public class ChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, userId);
 
@@ -85,6 +87,7 @@ public class ChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
 
@@ -115,6 +118,7 @@ public class ChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, userId);
 
@@ -146,6 +150,7 @@ public class ChatRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
 

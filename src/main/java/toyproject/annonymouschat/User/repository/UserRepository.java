@@ -22,6 +22,7 @@ public class UserRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getUserEmail());
             pstmt.setString(2, dto.getPassword());
@@ -45,6 +46,7 @@ public class UserRepository {
 
         try {
             conn = DBConnectionUtil.getConnection();
+            log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userEmail);
 

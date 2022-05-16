@@ -1,7 +1,7 @@
 package toyproject.annonymouschat.config.controlleradaptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import toyproject.annonymouschat.config.controller.ControllerResponseJson;
+import toyproject.annonymouschat.config.controller.controller.ControllerResponseJson;
 import toyproject.annonymouschat.config.controller.ModelView;
 import toyproject.annonymouschat.config.controller.ReturnType;
 
