@@ -20,20 +20,15 @@ RuntimeException으로 변환하여 던집니다.
 public class DBConnectionUtil {
     private static DataSource dataSource;
 
-    public static Connection getConnection() {
-        try {
-            if (dataSource == null) {
-                HikariDataSource hikariDataSource = new HikariDataSource();
-                hikariDataSource.setJdbcUrl(URL);
-                hikariDataSource.setUsername(USERNAME);
-                hikariDataSource.setPassword(PASSWORD);
-                hikariDataSource.setMaximumPoolSize(10);
-                dataSource = hikariDataSource;
-            }
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            log.error("exception", e);
-            throw new RuntimeException(e);
+    public static DataSource getDataSource() {
+        if (dataSource == null) {
+            HikariDataSource hikariDataSource = new HikariDataSource();
+            hikariDataSource.setJdbcUrl(URL);
+            hikariDataSource.setUsername(USERNAME);
+            hikariDataSource.setPassword(PASSWORD);
+            hikariDataSource.setMaximumPoolSize(10);
+            dataSource = hikariDataSource;
         }
+        return dataSource;
     }
 }

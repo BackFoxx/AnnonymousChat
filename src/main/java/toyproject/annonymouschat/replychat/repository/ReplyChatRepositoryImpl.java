@@ -2,10 +2,13 @@ package toyproject.annonymouschat.replychat.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
 import toyproject.annonymouschat.config.DatabaseException;
 import toyproject.annonymouschat.replychat.dto.*;
 import toyproject.annonymouschat.config.DBConnectionUtil;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +18,10 @@ import java.util.List;
 
 @Slf4j
 public class ReplyChatRepositoryImpl implements ReplyChatRepository {
+
+    private DataSource dataSource = DBConnectionUtil.getDataSource();
+    private SQLExceptionTranslator exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+
     @Override
     public void saveReply(ReplyChatSaveDto dto) {
         String sql = "insert into replychat (content, chatId, user_id) values (?, ?, ?)";
@@ -22,7 +29,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = dataSource.getConnection();
             log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getContent());
@@ -31,7 +38,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw exceptionTranslator.translate("chatRepository_saveReply", sql, e);
         } finally {
             closeConnection(null, conn, pstmt);
         }
@@ -45,7 +52,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
         ResultSet rs = null;
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = dataSource.getConnection();
             log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, dto.getChatId());
@@ -62,7 +69,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
 
             return result;
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw exceptionTranslator.translate("chatRepository_findAllByChatIdDto", sql, e);
         } finally {
             closeConnection(rs, conn, pstmt);
         }
@@ -76,7 +83,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
         ResultSet rs = null;
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = dataSource.getConnection();
             log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, dto.getUserId());
@@ -98,7 +105,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
 
             return result;
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw exceptionTranslator.translate("chatRepository_findAllByUserIdDto", sql, e);
         } finally {
             closeConnection(rs, conn, pstmt);
         }
@@ -111,7 +118,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = dataSource.getConnection();
             log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, dto.getReplyId());
@@ -119,7 +126,7 @@ public class ReplyChatRepositoryImpl implements ReplyChatRepository {
             pstmt.executeUpdate();
             log.info("삭제 완료되었습니다. 삭제한 replyId = {}", dto.getReplyId());
         } catch (SQLException e) {
-            throw new DatabaseException(e);
+            throw exceptionTranslator.translate("chatRepository_deleteReply", sql, e);
         } finally {
             closeConnection(null, conn, pstmt);
         }

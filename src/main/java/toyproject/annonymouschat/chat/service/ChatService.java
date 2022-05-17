@@ -13,7 +13,8 @@ public class ChatService {
     ChatRepository repository = new ChatRepositoryImpl();
 
     public Chat save(ChatSaveDto chatSaveDto) {
-        return repository.save(chatSaveDto);
+        Long saveId = repository.save(chatSaveDto);
+        return findbyChatId(saveId);
     }
     public void delete(ChatDeleteDto chatDeleteDto) {
         repository.delete(chatDeleteDto.getId());

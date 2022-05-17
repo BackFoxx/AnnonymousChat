@@ -2,11 +2,14 @@ package toyproject.annonymouschat.User.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
+import org.springframework.jdbc.support.SQLExceptionTranslator;
 import toyproject.annonymouschat.User.dto.UserRegistrationDto;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.config.DBConnectionUtil;
 import toyproject.annonymouschat.config.DatabaseException;
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +18,10 @@ import java.util.NoSuchElementException;
 
 @Slf4j
 public class UserRepositoryImpl implements UserRepository {
+
+    private DataSource dataSource = DBConnectionUtil.getDataSource();
+    private SQLExceptionTranslator exceptionTranslator = new SQLErrorCodeSQLExceptionTranslator(dataSource);
+
     // 아이디를 이용한 삭제
     @Override
     public String registration(UserRegistrationDto dto) {
@@ -23,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = dataSource.getConnection();
             log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getUserEmail());
@@ -35,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
             return dto.getUserEmail();
         } catch (SQLException e) {
             log.error("쿼리 실행 중 오류", e);
-            throw new DatabaseException(e);
+            throw exceptionTranslator.translate("chatRepository_registration", sql, e);
         } finally {
             closeConnection(null, conn, pstmt);
         }
@@ -49,7 +56,7 @@ public class UserRepositoryImpl implements UserRepository {
         ResultSet rs = null;
 
         try {
-            conn = DBConnectionUtil.getConnection();
+            conn = dataSource.getConnection();
             log.info("connection = {}", conn);
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userEmail);
@@ -63,7 +70,7 @@ public class UserRepositoryImpl implements UserRepository {
             throw new NoSuchElementException("해당하는 회원정보가 없습니다.");
         } catch (SQLException e) {
             log.error("쿼리 실행 중 오류", e);
-            throw new DatabaseException(e);
+            throw exceptionTranslator.translate("chatRepository_findByUserEmail", sql, e);
         } finally {
             closeConnection(rs, conn, pstmt);
         }

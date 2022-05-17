@@ -7,7 +7,7 @@ import toyproject.annonymouschat.chat.model.Chat;
 import java.util.List;
 
 public interface ChatRepository {
-    public Chat save(ChatSaveDto chatSaveDto);
+    public Long save(ChatSaveDto chatSaveDto);
 
     public List<MyChatPostBoxResponseDto> findAllByUserId(Long userId);
 

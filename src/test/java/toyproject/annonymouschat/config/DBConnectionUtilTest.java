@@ -14,15 +14,15 @@ import static toyproject.annonymouschat.config.ConnectionConst.*;
 @Slf4j
 class DBConnectionUtilTest {
 
-    @Test
-    @DisplayName("getConnection성공케이스")
-    void getConnection_성공케이스() {
-        Connection connection = DBConnectionUtil.getConnection();
-        Connection connection2 = DBConnectionUtil.getConnection();
-        Assertions.assertThat(connection).isNotNull();
-        log.info("커넥션 드라이버 : {}, class : {}", connection, connection.getClass());
-        log.info("커넥션 드라이버 : {}, class : {}", connection2, connection2.getClass());
-    }
+//    @Test
+//    @DisplayName("getConnection성공케이스")
+//    void getConnection_성공케이스() {
+//        Connection connection = DBConnectionUtil.getConnection();
+//        Connection connection2 = DBConnectionUtil.getConnection();
+//        Assertions.assertThat(connection).isNotNull();
+//        log.info("커넥션 드라이버 : {}, class : {}", connection, connection.getClass());
+//        log.info("커넥션 드라이버 : {}, class : {}", connection2, connection2.getClass());
+//    }
 
 //    @Test
 //    @DisplayName("스프링이 제공하는 DriverManager")
