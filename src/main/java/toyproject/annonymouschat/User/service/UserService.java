@@ -4,11 +4,12 @@ import toyproject.annonymouschat.User.dto.UserLoginDto;
 import toyproject.annonymouschat.User.dto.UserRegistrationDto;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.User.repository.UserRepository;
+import toyproject.annonymouschat.User.repository.UserRepositoryImpl;
 
 import java.util.NoSuchElementException;
 
 public class UserService {
-    private UserRepository userRepository = new UserRepository();
+    private UserRepository userRepository = new UserRepositoryImpl();
 
     public String registration(UserRegistrationDto dto) {
         return userRepository.registration(dto);

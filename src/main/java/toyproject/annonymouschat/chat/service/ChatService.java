@@ -5,11 +5,12 @@ import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.dto.MyChatPostBoxResponseDto;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.repository.ChatRepository;
+import toyproject.annonymouschat.chat.repository.ChatRepositoryImpl;
 
 import java.util.List;
 
 public class ChatService {
-    ChatRepository repository = new ChatRepository();
+    ChatRepository repository = new ChatRepositoryImpl();
 
     public Chat save(ChatSaveDto chatSaveDto) {
         return repository.save(chatSaveDto);

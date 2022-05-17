@@ -1,18 +1,10 @@
 package toyproject.annonymouschat.chat.repository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import toyproject.annonymouschat.chat.dto.ChatSaveDto;
-import toyproject.annonymouschat.chat.model.Chat;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.assertj.core.api.Assertions.*;
 
 @Slf4j
 class ChatRepositoryTest {
-    ChatRepository repository = new ChatRepository();
+    ChatRepository repository = new ChatRepositoryImpl();
 //
 //    @Test
 //    void chatRepository_전체프로세스() {
