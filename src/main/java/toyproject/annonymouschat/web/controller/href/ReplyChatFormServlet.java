@@ -14,7 +14,7 @@ public class ReplyChatFormServlet implements ControllerWithTwoMap {
     @ReturnType(type = ReturnType.ReturnTypes.FORWARD)
     public String process(Map<String, Object> requestParameters, Map<String, Object> model) {
         Long id = Long.valueOf((String) requestParameters.get("id"));
-        Chat chat = chatService.findbyChatId(id);
+        Chat chat = chatService.findByChatId(id);
 
         model.put("chat", chat);
         return "chat/replychat/replychat-form";

@@ -14,7 +14,7 @@ public class ChatService {
 
     public Chat save(ChatSaveDto chatSaveDto) {
         Long saveId = repository.save(chatSaveDto);
-        return findbyChatId(saveId);
+        return repository.findByChatId(saveId);
     }
     public void delete(ChatDeleteDto chatDeleteDto) {
         repository.delete(chatDeleteDto.getId());
@@ -26,7 +26,7 @@ public class ChatService {
         return repository.getRandom(userId);
     }
 
-    public Chat findbyChatId(Long id) {
+    public Chat findByChatId(Long id) {
         return repository.findByChatId(id);
     }
 }

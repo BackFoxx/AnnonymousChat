@@ -1,16 +1,14 @@
 package toyproject.annonymouschat.chat.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 /*
 Chat 테이블과 동일한 구조
 */
 @Getter
+@Setter
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
