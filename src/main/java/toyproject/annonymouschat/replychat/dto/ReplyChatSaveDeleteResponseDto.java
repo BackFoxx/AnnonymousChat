@@ -8,5 +8,4 @@ import lombok.Getter;
 public class ReplyChatSaveDeleteResponseDto {
     private boolean ok;
     private String message;
-    private String redirect;
 }

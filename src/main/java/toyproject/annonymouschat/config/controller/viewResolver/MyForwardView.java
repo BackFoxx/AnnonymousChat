@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.config.controller;
+package toyproject.annonymouschat.config.controller.viewResolver;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

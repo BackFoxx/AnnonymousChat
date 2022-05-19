@@ -5,8 +5,8 @@ import toyproject.annonymouschat.chat.dto.ChatDeleteDto;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.controller.ControllerAutoJson;
-import toyproject.annonymouschat.config.controller.RequestBody;
-import toyproject.annonymouschat.config.controller.ReturnType;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyRequestBody;
+import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
 
 @Slf4j
 public class ChatPostDeleteServlet implements ControllerAutoJson<ChatDeleteDto> {
@@ -15,8 +15,8 @@ public class ChatPostDeleteServlet implements ControllerAutoJson<ChatDeleteDto> 
 
     @Override
     @ReturnType(type = ReturnType.ReturnTypes.JSON)
-    public Object process(@RequestBody ChatDeleteDto requestBody) {
+    public Object process(@MyRequestBody ChatDeleteDto requestBody) {
         chatService.delete(requestBody);
-        return new ChatPostSaveDeleteResponseDto(true, "okok", "/v/chat/mypostbox");
+        return new ChatPostSaveDeleteResponseDto(true, "okok");
     }
 }

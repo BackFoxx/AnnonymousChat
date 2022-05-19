@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.config.controlleradaptor;
+package toyproject.annonymouschat.config.controller.controlleradaptor;
 
 import toyproject.annonymouschat.config.controller.ModelView;
 

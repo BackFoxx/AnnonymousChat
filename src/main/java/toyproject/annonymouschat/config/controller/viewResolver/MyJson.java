@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.config.controller;
+package toyproject.annonymouschat.config.controller.viewResolver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

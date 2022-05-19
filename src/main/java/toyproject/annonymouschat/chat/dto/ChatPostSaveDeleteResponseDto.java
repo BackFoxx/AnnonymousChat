@@ -10,5 +10,4 @@ import lombok.Setter;
 public class ChatPostSaveDeleteResponseDto {
     private boolean ok;
     private String message;
-    private String redirect;
 }

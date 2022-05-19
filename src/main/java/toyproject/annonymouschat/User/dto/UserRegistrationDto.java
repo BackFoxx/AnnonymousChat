@@ -1,9 +1,9 @@
 package toyproject.annonymouschat.User.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
-@AllArgsConstructor
+@Setter
 @Getter
 public class UserRegistrationDto {
     private String userEmail;

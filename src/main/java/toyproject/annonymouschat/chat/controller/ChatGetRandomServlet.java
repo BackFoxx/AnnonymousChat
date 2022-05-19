@@ -5,7 +5,7 @@ import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.controller.ControllerResponseJson;
-import toyproject.annonymouschat.config.controller.ReturnType;
+import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
 
 import java.util.Map;
 
