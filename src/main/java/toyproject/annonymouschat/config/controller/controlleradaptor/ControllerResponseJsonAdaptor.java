@@ -1,28 +1,45 @@
-package toyproject.annonymouschat.config.controlleradaptor;
+package toyproject.annonymouschat.config.controller.controlleradaptor;
 
-import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import toyproject.annonymouschat.config.controller.controller.ControllerResponseJson;
 import toyproject.annonymouschat.config.controller.ModelView;
+import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ControllerWithMapAdaptor implements ControllerAdaptor {
+public class ControllerResponseJsonAdaptor implements ControllerAdaptor {
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     @Override
     public boolean supports(Object controller) {
-        return controller instanceof ControllerWithMap;
+        if (controller instanceof ControllerResponseJson) {
+            try {
+                Method process = Arrays.stream(controller.getClass().getMethods())
+                        .filter(method -> method.getName().equals("process")).findAny().orElseThrow(() -> new NoSuchMethodException());
+                return process.getAnnotation(ReturnType.class).type() == ReturnType.ReturnTypes.JSON;
+            } catch (NoSuchMethodException e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     @Override
     public ModelView handle(HttpServletRequest request, HttpServletResponse response, Object controller) {
-        ControllerWithMap target = (ControllerWithMap) controller;
+        ControllerResponseJson target = (ControllerResponseJson) controller;
         Map<String, Object> requestParameters = setRequestParametersToMap(request, response);
+        Object result = target.process(requestParameters);
 
-        ModelView modelView = target.process(requestParameters);
+        ModelView modelView = new ModelView();
+        modelView.getModel().put("response", result);
         return modelView;
     }
 

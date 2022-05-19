@@ -1,9 +1,8 @@
 package toyproject.annonymouschat.replychat.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
-import toyproject.annonymouschat.config.controller.ReturnType;
+import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
 import toyproject.annonymouschat.replychat.dto.RepliesByChatIdDto;
 import toyproject.annonymouschat.replychat.dto.RepliesByChatIdResponseDto;
 import toyproject.annonymouschat.replychat.service.ReplyChatService;

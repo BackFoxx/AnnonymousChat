@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.config.controller;
+package toyproject.annonymouschat.config.controller.customAnnotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

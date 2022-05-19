@@ -3,7 +3,7 @@ package toyproject.annonymouschat.web.controller.href;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.chat.service.ChatService;
 import toyproject.annonymouschat.config.controller.controller.ControllerWithTwoMap;
-import toyproject.annonymouschat.config.controller.ReturnType;
+import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package toyproject.annonymouschat.config;
+package toyproject.annonymouschat.config.exception;
 
 public class DatabaseException extends RuntimeException {
     public DatabaseException() {

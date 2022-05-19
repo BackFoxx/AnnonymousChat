@@ -1,22 +1,16 @@
 package toyproject.annonymouschat.chat.repository;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.*;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.dto.MyChatPostBoxResponseDto;
 import toyproject.annonymouschat.chat.model.Chat;
 import toyproject.annonymouschat.config.DBConnectionUtil;
-import toyproject.annonymouschat.config.DatabaseException;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Slf4j
 public class ChatRepositoryImpl implements ChatRepository{
