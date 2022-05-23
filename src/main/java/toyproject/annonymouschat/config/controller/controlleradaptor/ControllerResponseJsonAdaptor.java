@@ -22,7 +22,7 @@ public class ControllerResponseJsonAdaptor implements ControllerAdaptor {
     public boolean supports(Object controller) {
         if (controller instanceof ControllerResponseJson) {
             try {
-                Method process = Arrays.stream(controller.getClass().getMethods())
+                Method process = Arrays.stream(controller.getClass().getSuperclass().getDeclaredMethods())
                         .filter(method -> method.getName().equals("process")).findAny().orElseThrow(() -> new NoSuchMethodException());
                 return process.getAnnotation(ReturnType.class).type() == ReturnType.ReturnTypes.JSON;
             } catch (NoSuchMethodException e) {

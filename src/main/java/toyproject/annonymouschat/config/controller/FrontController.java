@@ -1,21 +1,12 @@
 package toyproject.annonymouschat.config.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import toyproject.annonymouschat.User.controller.UserLoginServlet;
-import toyproject.annonymouschat.User.controller.UserLogoutServlet;
-import toyproject.annonymouschat.User.controller.UserRegistrationServlet;
-import toyproject.annonymouschat.chat.controller.ChatGetRandomServlet;
-import toyproject.annonymouschat.chat.controller.ChatPostDeleteServlet;
-import toyproject.annonymouschat.chat.controller.ChatPostSaveServlet;
+import org.springframework.cglib.proxy.Enhancer;
 import toyproject.annonymouschat.config.controller.controlleradaptor.*;
 import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
 import toyproject.annonymouschat.config.controller.viewResolver.MyForwardView;
 import toyproject.annonymouschat.config.controller.viewResolver.MyJson;
 import toyproject.annonymouschat.config.controller.viewResolver.MyRedirectView;
-import toyproject.annonymouschat.replychat.controller.RepliesByChatIdServlet;
-import toyproject.annonymouschat.replychat.controller.ReplyDeleteServlet;
-import toyproject.annonymouschat.replychat.controller.ReplySaveServlet;
-import toyproject.annonymouschat.web.controller.href.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,6 +46,8 @@ public class FrontController extends HttpServlet {
             return;
         }
 
+        controller = setArgumentResolver(controller);
+
         ControllerAdaptor adaptor = assignControllerAdaptor(controller);
 
         log.info("ControllerAdaptor = {}", adaptor.getClass());
@@ -69,6 +62,13 @@ public class FrontController extends HttpServlet {
         else if (result instanceof MyRedirectView) ((MyRedirectView) result).render(modelView.getModel(), request, response);
 
         log.info("--------- 호출 완료! ------------");
+    }
+
+    private Object setArgumentResolver(Object controller) {
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(controller.getClass());
+        enhancer.setCallback(new ArgumentResolverV1(controller));
+        return enhancer.create();
     }
 
     private ControllerAdaptor assignControllerAdaptor(Object controller) {
@@ -86,11 +86,11 @@ public class FrontController extends HttpServlet {
         * */
 
         try {
-            Method process = Arrays.stream(controller.getClass().getMethods())
+            Method superClassMethod = Arrays.stream(controller.getClass().getSuperclass().getDeclaredMethods())
                     .filter(method -> method.getName().equals("process")).findAny()
                     .orElseThrow(() -> new NoSuchMethodException("잘못된 컨트롤러 형식"));
 
-            ReturnType.ReturnTypes returnType = process.getAnnotation(ReturnType.class).type();
+            ReturnType.ReturnTypes returnType = superClassMethod.getAnnotation(ReturnType.class).type();
 
             if (returnType == ReturnType.ReturnTypes.FORWARD) {
                 return new MyForwardView(viewResolver(modelView.getViewName()));
