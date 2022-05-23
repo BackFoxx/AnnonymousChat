@@ -2,10 +2,13 @@ package toyproject.annonymouschat.chat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMethod;
 import toyproject.annonymouschat.User.model.User;
 import toyproject.annonymouschat.chat.dto.ChatPostSaveDeleteResponseDto;
 import toyproject.annonymouschat.chat.dto.ChatSaveDto;
 import toyproject.annonymouschat.chat.service.ChatService;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyController;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyRequestMapping;
 import toyproject.annonymouschat.config.exception.WrongFormException;
 import toyproject.annonymouschat.config.controller.controller.ControllerResponseJson;
 import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
@@ -15,7 +18,8 @@ import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
-//@WebServlet(name = "chat/post/save", urlPatterns = "/v/chat/post/save")
+@MyController
+@MyRequestMapping(value = "/v/chat/post/save", method = RequestMethod.POST)
 public class ChatPostSaveServlet implements ControllerResponseJson {
     private ChatService chatService = new ChatService();
     private ObjectMapper objectMapper = new ObjectMapper();

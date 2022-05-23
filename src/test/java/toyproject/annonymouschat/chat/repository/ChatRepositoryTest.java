@@ -1,7 +1,11 @@
 package toyproject.annonymouschat.chat.repository;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMethod;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyController;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyRequestMapping;
 
+@MyController
 @Slf4j
 class ChatRepositoryTest {
     ChatRepository repository = new ChatRepositoryImpl();
@@ -40,4 +44,8 @@ class ChatRepositoryTest {
 //        Chat random2 = repository.getRandom();
 //        assertThat(random.getId()).isNotEqualTo(random2.getId());
 //    }
+    @MyRequestMapping(value = "tt", method = RequestMethod.POST)
+    public String stringTest() {
+        return "ok";
+    }
 }

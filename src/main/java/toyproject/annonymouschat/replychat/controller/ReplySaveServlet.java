@@ -2,7 +2,10 @@ package toyproject.annonymouschat.replychat.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMethod;
 import toyproject.annonymouschat.User.model.User;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyController;
+import toyproject.annonymouschat.config.controller.customAnnotation.MyRequestMapping;
 import toyproject.annonymouschat.config.exception.WrongFormException;
 import toyproject.annonymouschat.config.controller.controller.ControllerWithMap;
 import toyproject.annonymouschat.config.controller.ModelView;
@@ -16,7 +19,8 @@ import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
-//@WebServlet(name = "reply", urlPatterns = "/v/reply/save")
+@MyController
+@MyRequestMapping(value = "/v/reply/save", method = RequestMethod.POST)
 public class ReplySaveServlet implements ControllerWithMap {
     private ReplyChatService replyChatService = new ReplyChatService();
     private ObjectMapper objectMapper = new ObjectMapper();

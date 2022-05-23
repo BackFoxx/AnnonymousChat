@@ -1,20 +1,21 @@
 package toyproject.annonymouschat.User.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMethod;
 import toyproject.annonymouschat.User.dto.UserRegistrationDto;
 import toyproject.annonymouschat.User.dto.UserResponseDto;
 import toyproject.annonymouschat.User.service.UserService;
+import toyproject.annonymouschat.config.controller.customAnnotation.*;
 import toyproject.annonymouschat.config.exception.WrongFormException;
-import toyproject.annonymouschat.config.controller.customAnnotation.MyRequestBody;
 import toyproject.annonymouschat.config.controller.controller.ControllerAutoJson;
-import toyproject.annonymouschat.config.controller.customAnnotation.ReturnType;
-import toyproject.annonymouschat.config.controller.customAnnotation.MyHttpResponse;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.regex.Pattern;
 
 @Slf4j
+@MyController
+@MyRequestMapping(value = "/v/login/registration", method = RequestMethod.POST)
 public class UserRegistrationServlet implements ControllerAutoJson<UserRegistrationDto> {
     private UserService userService = new UserService();
     @MyHttpResponse

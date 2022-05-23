@@ -58,7 +58,9 @@
                 const parsed = JSON.parse(result);
                 if (parsed.ok) {
                     alert(parsed.message);
-                    window.location.href = parsed.redirect;
+                    window.location.href = '/v/chat/myreply';
+                } else {
+                    alert(parsed.message);
                 }
             }
         })

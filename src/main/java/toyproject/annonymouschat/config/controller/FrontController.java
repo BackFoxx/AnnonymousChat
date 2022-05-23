@@ -29,34 +29,13 @@ import java.util.*;
 @Slf4j
 @WebServlet(urlPatterns = {"/v/*"})
 public class FrontController extends HttpServlet {
-    Map<String, Object> controllerMap = new HashMap<>();
+    Map<String, Object> controllerMap;
     List<ControllerAdaptor> controllerAdaptorList = new ArrayList<>();
 
     public FrontController() {
-        //User
-        controllerMap.put("/v/login", new UserLoginServlet());
-        controllerMap.put("/v/logout", new UserLogoutServlet());
-        controllerMap.put("/v/login/registration", new UserRegistrationServlet());
-
-        //Chat
-        controllerMap.put("/v/chat/postbox/random", new ChatGetRandomServlet());
-        controllerMap.put("/v/chat/post/delete", new ChatPostDeleteServlet());
-        controllerMap.put("/v/chat/post/save", new ChatPostSaveServlet());
-
-        //ReplyChat
-        controllerMap.put("/v/reply/find", new RepliesByChatIdServlet());
-        controllerMap.put("/v/reply/delete", new ReplyDeleteServlet());
-        controllerMap.put("/v/reply/save", new ReplySaveServlet());
-
-        //Web
-        controllerMap.put("/v/", new IndexServlet());
-        controllerMap.put("/v/chat/postbox", new ChatPostBoxServlet());
-        controllerMap.put("/v/chat/post", new ChatPostServlet());
-        controllerMap.put("/v/login/login-form", new LoginFormServlet());
-        controllerMap.put("/v/chat/mypostbox", new MyChatPostBoxServlet());
-        controllerMap.put("/v/chat/myreply", new MyRepliesServlet());
-        controllerMap.put("/v/login/registration-form", new RegistrationFormServlet());
-        controllerMap.put("/v/replyForm", new ReplyChatFormServlet());
+        //어노테이션 기반 ControllerMapping
+        ControllerMappingV1 controllerMappingV1 = new ControllerMappingV1();
+        controllerMap = controllerMappingV1.controllerMapper();
 
         //Adaptor
         controllerAdaptorList.add(new ControllerWithMapAdaptor());
